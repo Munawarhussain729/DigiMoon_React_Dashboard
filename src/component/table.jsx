@@ -17,37 +17,59 @@ const Table = () => {
         return formattedDate
     }
 
-    useEffect(() => {
-        const fetchTableHeader = async () => {
-            const token = localStorage.getItem("userToken")
-            const response = await axios.get('http://localhost:8080/customer/get-customer-fields', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            })
-            setTableFields(response?.data?.data)
-            console.log("Response is ", response.data.data);
+    const fetchTableHeader = async () => {
+        const token = localStorage.getItem("userToken")
+        const response = await axios.get('http://localhost:8080/customer/get-customer-fields', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        setTableFields(response?.data?.data)
+        console.log("Response is ", response.data.data);
+    }
+    const fetchTableCustomer = async () => {
+        const token = localStorage.getItem("userToken")
+        const response = await axios.post('http://localhost:8080/customer/get-customers', {
+            "pageSize": 10,
+            "pageNumber": 1,
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', // Set the appropriate content type if needed
+            },
+        });
+        console.log("Customer Response is ", response.data.data?.items);
+        setCustomerData(response.data.data?.items)
+    }
+
+    const fetchCustomerForParams = async ({fetchOrder, columnName} )=>{
+        let params ={}
+        if(fetchOrder){
+            params['pageSize'] = 10
+            params['pageNumber']=1
+            params['sortByColumn']=columnName
+            params['sortByPreference']=fetchOrder
         }
-        fetchTableHeader()
-    }, [])
+
+        const token = localStorage.getItem("userToken")
+        const response = await axios.post('http://localhost:8080/customer/get-customers', params, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', // Set the appropriate content type if needed
+            },
+        });
+        console.log("Customer Response is ", response.data.data?.items);
+        setCustomerData(response.data.data?.items)
+
+    }
 
     useEffect(() => {
-        const fetchTableHeader = async () => {
-            const token = localStorage.getItem("userToken")
-            const response = await axios.post('http://localhost:8080/customer/get-customers', {
-                "pageSize": 10,
-                "pageNumber": 1,
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json', // Set the appropriate content type if needed
-                },
-            });
-            console.log("Customer Response is ", response.data.data?.items);
-            setCustomerData(response.data.data?.items)
-        }
+
         fetchTableHeader()
+        fetchTableCustomer()
     }, [])
+
+
     return (
         <>
             <table className='w-[1210px] p-5'>
@@ -58,8 +80,8 @@ const Table = () => {
                                 <th key={tableHead?._id} className='w-[40px] rounded-tl-md'>
                                     <div className='flex items-center text-center gap-[2px] ps-8'>
                                         <div className='flex flex-col gap-y-[3px]'>
-                                            <img src={ActiveSortArrowUp} alt="Sort Arrow Up" />
-                                            <img src={HoverSortArrowDown} alt="Sort Arrow Down" />
+                                            <img className='cursor-pointer' src={ActiveSortArrowUp} onClick={() => fetchCustomerForParams({ fetchOrder: 'asc', columnName: tableHead?.name })} alt="Sort Arrow Up" />
+                                            <img className='cursor-pointer' src={HoverSortArrowDown} onClick={() => fetchCustomerForParams({ fetchOrder: 'desc', columnName: tableHead?.name })} alt="Sort Arrow Down" />
                                         </div>
                                         <h4 className='text-[#333] text-xs font-semibold leading-normal capitalize'>{tableHead?.name}</h4>
                                     </div>
