@@ -5,8 +5,7 @@ import HoverSortArrowDown from '../assets/svg/ic_h_tablearrowDown.svg';
 import ActiveSortArrowUp from '../assets/svg/ic_s_tablearrowup.svg';
 import axios from 'axios';
 
-const Table = () => {
-    const [tabeData, setTableData] = useState()
+const Table = ({pageNo}) => {
     const [tableFields, setTableFields] = useState()
     const [CustomerData, setCustomerData] = useState()
 
@@ -31,7 +30,7 @@ const Table = () => {
         const token = localStorage.getItem("userToken")
         const response = await axios.post('http://localhost:8080/customer/get-customers', {
             "pageSize": 10,
-            "pageNumber": 1,
+            "pageNumber": pageNo,
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -42,15 +41,23 @@ const Table = () => {
         setCustomerData(response.data.data?.items)
     }
 
-    const fetchCustomerForParams = async ({fetchOrder, columnName} )=>{
+    useEffect(()=>{
+        console.log("Page No Changed");
+        fetchCustomerForParams()
+    },[pageNo])
+
+    const fetchCustomerForParams = async ({ fetchOrder = '', columnName = '' } = {} )=>{
         let params ={}
-        if(fetchOrder){
+        if(fetchOrder && !!columnName){
             params['pageSize'] = 10
-            params['pageNumber']=1
+            params['pageNumber']=pageNo
             params['sortByColumn']=columnName
             params['sortByPreference']=fetchOrder
         }
-
+        else{
+            params['pageSize'] = 10
+            params['pageNumber']=pageNo
+        }
         const token = localStorage.getItem("userToken")
         const response = await axios.post('http://localhost:8080/customer/get-customers', params, {
             headers: {
@@ -93,7 +100,7 @@ const Table = () => {
                 <tbody>
                     {CustomerData?.map((customerRow, index) => {
                         return (
-                            <tr className='border-b border-[#EFF3FE] py-3'>
+                            <tr key={index} className='border-b border-[#EFF3FE] py-3'>
                                 {tableFields?.map((tableField, index)=>{
                                     if(tableField.name === "status"){
                                         if(customerRow[tableField.name] === "active")

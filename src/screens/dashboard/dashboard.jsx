@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import NavigationMenu from '../../component/navigationMenu/navigationMenu';
 import Navbar from '../../component/navBar/navbar';
 import SearchField from '../../component/searchField/searchField';
@@ -15,6 +15,9 @@ import Notification from '../../component/Notification';
 import ProfilePopUp from '../../component/profilePopUp';
 
 const Dashboard = () => {
+  const [pageNo, setPageNo] = useState(1)
+  const [NotifcationPageNo, setNotifcationPageNo] = useState(1)
+
   return (
     <>
       <div className="flex items-start">
@@ -36,12 +39,12 @@ const Dashboard = () => {
             <Filter />
           </div>
           <div className="mt-3">
-            <Table />
-            <TableFooter />
+            <Table pageNo={pageNo}/>
+            <TableFooter pageNo={pageNo} setPageNo={setPageNo} />
           </div>
           <div className="mt-3">
             <Notification />
-            <TableFooter />
+            <TableFooter pageNo={NotifcationPageNo} setPageNo={setNotifcationPageNo} />
           </div>
           <div className="fixed bottom-0 right-0 ">
             <FirstPopUp />
