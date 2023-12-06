@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { addDays } from 'date-fns';
 import '../assets/DatePicker.css';
 
-const DatePicker = () => {
+const DatePicker = ({name, updateFieldValue}) => {
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -13,16 +13,17 @@ const DatePicker = () => {
       key: 'selection',
     },
   ]);
+
   return (
     <>
       <div className="w-full">
         <div className="mt-4 mb-[11px]">
           <h3 className="text-[#4F4F4F] text-xs font-medium leading-normal capitalize">
-            Date Range
+            {name}
           </h3>
         </div>
         <DateRangePicker
-          onChange={(item) => setState([item.selection])}
+          onChange={(item) => {setState([item.selection]); updateFieldValue(name, item.selection)}}
           months={2}
           ranges={state}
           direction="horizontal"

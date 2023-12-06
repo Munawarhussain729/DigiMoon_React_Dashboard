@@ -17,19 +17,19 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 `;
 
-const SearchField = () => {
+const SearchField = ({setFilter, filter,searchField, setSearchField, fetchCustomerForSearch}) => {
     return (
         <>
             <StyledComponent>
                 <div className='flex gap-3'>
                 <div className='w-10/12 h-11 py-3 ps-4 pl-48 pr-2 rounded-lg bg-[#FEFEFE] shadow-md flex justify-between items-center'>
-                    <input type="search" placeholder='Search from listing' className='searchField w-9/12 h-full focus:outline-none text-xs font-normal leading-normal' />
+                    <input value={searchField} onChange={(e)=>{setSearchField(e.target.value)}} type="search" placeholder='Search from listing' className='searchField w-9/12 h-full focus:outline-none text-xs font-normal leading-normal' />
                     <div className='flex justify-center gap-2 items-center'>
-                        <div className='w-[89px] h-[27.5px] rounded-[5px] bg-[#F3F3FF] flex justify-center items-center gap-[3.8px] cursor-pointer'>
+                        <div onClick={()=>{setFilter(!filter)}} className='w-[89px] h-[27.5px] rounded-[5px] bg-[#F3F3FF] flex justify-center items-center gap-[3.8px] cursor-pointer'>
                             <img src={ic_filter} />
                             <p className='text-[#5350F8] text-xs font-normal leading-normal'>Filter</p>
                         </div>
-                        <div className='w-[89px] h-[27.5px] rounded-[5px] bg-[#5350F8] flex justify-center items-center gap-[3.8px] cursor-pointer'>
+                        <div onClick={fetchCustomerForSearch} className='w-[89px] h-[27.5px] rounded-[5px] bg-[#5350F8] flex justify-center items-center gap-[3.8px] cursor-pointer'>
                             <img src={ic_search} />
                             <p className='text-white text-xs font-normal leading-normal'>Find</p>
                         </div>

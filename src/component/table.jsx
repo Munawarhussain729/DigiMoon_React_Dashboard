@@ -5,40 +5,14 @@ import HoverSortArrowDown from '../assets/svg/ic_h_tablearrowDown.svg';
 import ActiveSortArrowUp from '../assets/svg/ic_s_tablearrowup.svg';
 import axios from 'axios';
 
-const Table = ({pageNo}) => {
-    const [tableFields, setTableFields] = useState()
-    const [CustomerData, setCustomerData] = useState()
+const Table = ({pageNo,tableFields, setTableFields, CustomerData, setCustomerData}) => {
+  
 
     function formatDateString(inputDateString) {
         const date = new Date(inputDateString);
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
         const formattedDate = date.toLocaleString('en-US', options);
         return formattedDate
-    }
-
-    const fetchTableHeader = async () => {
-        const token = localStorage.getItem("userToken")
-        const response = await axios.get('http://localhost:8080/customer/get-customer-fields', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-        })
-        setTableFields(response?.data?.data)
-        console.log("Response is ", response.data.data);
-    }
-    const fetchTableCustomer = async () => {
-        const token = localStorage.getItem("userToken")
-        const response = await axios.post('http://localhost:8080/customer/get-customers', {
-            "pageSize": 10,
-            "pageNumber": pageNo,
-        }, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json', // Set the appropriate content type if needed
-            },
-        });
-        console.log("Customer Response is ", response.data.data?.items);
-        setCustomerData(response.data.data?.items)
     }
 
     useEffect(()=>{
@@ -69,13 +43,6 @@ const Table = ({pageNo}) => {
         setCustomerData(response.data.data?.items)
 
     }
-
-    useEffect(() => {
-
-        fetchTableHeader()
-        fetchTableCustomer()
-    }, [])
-
 
     return (
         <>

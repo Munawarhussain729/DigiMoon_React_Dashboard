@@ -1,23 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CloseBtn from '../assets/svg/ic_close.svg';
 import ReviewStar from '../assets/svg/ic_start.svg';
 import DatePicker from './DatePicker';
 
-const ThirdPopUp = () => {
+const ThirdPopUp = ({ filter, setFilter, tableFields, filterFields, setFilterFields, fetchCustomerForParams }) => {
+ 
+
+  const updateFieldValue = (fieldName, newValue) => {
+    console.log("Field name is ", filterFields);
+    console.log("Table fields is ", tableFields);
+    setFilterFields((prevFilterFields) => {
+      return prevFilterFields?.map((field) => {
+        if (field.name === fieldName) {
+          return { ...field, value: newValue };
+        }
+        return field;
+      });
+    });
+  };
+
+
   return (
     <>
-      <div className="hidden bg-white shrink-0 shadow-[0px_3px_10px_0px_rgba(0,0,0,0.08)] rounded-sm border-[0.8px] border-solid border-[rgba(214,221,239,0.40)]">
+      <div className={`${filter ? '' : 'hidden'} bg-white shrink-0 shadow-[0px_3px_10px_0px_rgba(0,0,0,0.08)] rounded-sm border-[0.8px] border-solid border-[rgba(214,221,239,0.40)]`}>
         <div className="w-[400px] overflow-x-hidden overflow-y-auto h-[550px] p-4">
           <div className="flex justify-between">
             <h3 className="flex w-[42px] h-[17.972px] flex-col justify-center shrink-0 text-[#4441EB] text-xs not-italic font-normal leading-[normal] uppercase">
               Filters
             </h3>
-            <button>
+            <button onClick={() => { setFilter(false) }}>
               <img src={CloseBtn} />
             </button>
           </div>
           <div className="h-px bg-[#E6E6E6] mt-3"></div>
-          <div>
+          {tableFields?.map((singleField, index) => {
+            if (singleField?.type === "string") {
+              return (
+                <div className="mt-4" onClick={() => { updateFieldValue(singleField?.name, singleField?.name) }}>
+                  <h3 className="text-[#4F4F4F] text-xs font-medium leading-normal capitalize">
+                    {singleField.name}
+                  </h3>
+                </div>
+              )
+            }
+        return (
+          <div className="mt-4">
+            <DatePicker
+              name={singleField.name}
+              onChange={(newValue) => updateFieldValue(singleField.name, newValue)} // Pass the update function to DatePicker
+              updateFieldValue = {updateFieldValue}
+            />
+          </div>
+        )
+      })}
+          {/* <div>
             <div className="mt-4">
               <h3 className="text-[#4F4F4F] text-xs font-medium leading-normal capitalize">
                 Status
@@ -206,10 +242,9 @@ const ThirdPopUp = () => {
                 </ul>
               </li>
             </ul>
-          </div>
-          <DatePicker />
+          </div> */}
         </div>
-        <button className="h-[50px] bg-[#EFEFFD] text-[#4441EB] w-full text-xs font-normal leading-normal uppercase">
+        <button onClick={() => { setFilter(false);fetchCustomerForParams() }} className="h-[50px] bg-[#EFEFFD] text-[#4441EB] w-full text-xs font-normal leading-normal uppercase">
           Apply Filter
         </button>
       </div>
