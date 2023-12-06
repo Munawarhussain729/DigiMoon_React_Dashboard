@@ -1,0 +1,23 @@
+   .rdrDefinedRangesWrapper {
+        display: none;
+    }
+    .rdrDateRangePickerWrapper{
+        width: 350px;
+    }
+    .rdrCalendarWrapper, 
+    .rdrDateRangeWrapper{
+        width: 350px;
+        .rdrMonthName{
+            text-align: center;
+        }
+        .rdrWeekDay{
+            font-size: 9px;
+            font-weight: 500;
+        }
+        .rdrDay{
+            font-size: 9px;
+            font-weight: 500;
+            height: 28px;
+        }
+    
+    }
