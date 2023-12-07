@@ -24,6 +24,8 @@ const Dashboard = () => {
   const [CustomerData, setCustomerData] = useState()
   const [searchField, setSearchField] = useState('')
   const [searchColumn, setSearchColumn] = useState([])
+  const [showNotification, setShowNotification] = useState(false)
+  const [showAllNotification, setShowAllNotification] = useState(false)
 
   const handleSearchColumnSelection = (columnName) => {
     setSearchColumn((prevSearchColumn) => {
@@ -123,7 +125,7 @@ const Dashboard = () => {
       <div className="flex items-start">
         <NavigationMenu />
         <div className="pl-[15px] pt-[25px] pr-[18px] w-full ml-[182px]">
-          <Navbar />
+          <Navbar showNotification={showNotification} setShowNotification={setShowNotification} showAllNotification={showAllNotification} setShowAllNotification={setShowAllNotification} />
           <div className="mt-7">
             <SearchField setFilter={setFilter} filter={filter} searchField={searchField} setSearchField={setSearchField} fetchCustomerForSearch={fetchCustomerForSearch}/>
           </div>
@@ -156,11 +158,11 @@ const Dashboard = () => {
             </div>
             <Filter filterFields={filterFields} />
           </div>
-          <div className="mt-3">
+          <div className={`mt-3 ${showAllNotification && 'hidden'}`}>
             <Table pageNo={pageNo} tableFields={tableFields} setTableFields={setTableFields} CustomerData={CustomerData} setCustomerData={setCustomerData} />
             <TableFooter pageNo={pageNo} setPageNo={setPageNo} />
           </div>
-          <div className="mt-3">
+          <div className={`mt-3 ${!showAllNotification && 'hidden'}`}>
             <Notification />
             <TableFooter pageNo={NotifcationPageNo} setPageNo={setNotifcationPageNo} />
           </div>
@@ -169,7 +171,7 @@ const Dashboard = () => {
             <ThirdPopUp filter={filter} setFilter={setFilter} tableFields={tableFields} filterFields={filterFields} setFilterFields={setFilterFields} fetchCustomerForParams={fetchCustomerForParams} />
           </div>
           <div className="absolute top-16 right-36">
-            <FourthPopUp />
+            <FourthPopUp showNotification={showNotification} setShowNotification={setShowNotification} setShowAllNotification={setShowAllNotification}/>
           </div>
           <div>
             <ProfilePopUp />

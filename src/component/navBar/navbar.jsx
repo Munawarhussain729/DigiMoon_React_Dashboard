@@ -3,7 +3,7 @@ import ic_notification from '../../assets/svg/ic_notification.svg'
 import Profile from '../../assets/images/profile.png'
 import ic_dropdown from '../../assets/svg/ic_profiledropdown.svg'
 
-const Navbar = () => {
+const Navbar = ({showNotification, setShowNotification}) => {
     return (
         <>
             <div className='flex justify-between items-start'>
@@ -12,7 +12,7 @@ const Navbar = () => {
                     <h3 className='text-[#333] text-base font-medium leading-normal'>Good Morning,<span className='font-bold'> Marcus</span></h3>
                 </div>
                 <div className='flex'>
-                    <div className='w-[34px] h-[34px] inline-flex relative cursor-pointer'>
+                    <div onClick={()=>{setShowNotification(!showNotification)}} className='w-[34px] h-[34px] inline-flex relative cursor-pointer'>
                         <img src={ic_notification} alt="notification" />
                         <div className='absolute -right-[6px] w-[15px] h-[15px] rounded-full bg-[#FFA83A] flex items-center justify-center'><span className='text-white text-[9.154px] leading-normal font-semibold'>2</span></div>
                     </div>

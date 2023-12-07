@@ -1,9 +1,13 @@
 import React from 'react';
 
-const FourthPopUp = () => {
+const FourthPopUp = ({showNotification,setShowNotification, setShowAllNotification}) => {
+  const handleViewAllNotifications = ()=>{
+    setShowAllNotification(true)
+    setShowNotification(false)
+  }
   return (
     <>
-      <div className="hidden relative w-[427px] h-[480px] bg-white shrink-0 shadow-[0px_3px_10px_0px_rgba(0,0,0,0.08)] rounded-sm border-[0.8px] border-solid border-[rgba(214,221,239,0.40)]">
+      <div className={` ${!showNotification && "hidden"} relative w-[427px] h-[480px] bg-white shrink-0 shadow-[0px_3px_10px_0px_rgba(0,0,0,0.08)] rounded-sm border-[0.8px] border-solid border-[rgba(214,221,239,0.40)]`}>
         <div className="overflow-x-hidden overflow-y-auto  h-[428px] ">
           <div className="flex justify-between items-center mt-5 px-4">
             <p className="text-[#4441EB] text-xs font-normal leading-normal uppercase">
@@ -187,7 +191,7 @@ const FourthPopUp = () => {
             </ul>
           </div>
         </div>
-        <button className="absolute bottom-0 h-[50px] bg-[#EFEFFD] text-[#4441EB] w-full text-xs font-normal leading-normal uppercase">
+        <button onClick={handleViewAllNotifications} className="absolute bottom-0 h-[50px] bg-[#EFEFFD] text-[#4441EB] w-full text-xs font-normal leading-normal uppercase">
           View All
         </button>
       </div>
