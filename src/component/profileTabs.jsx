@@ -3,7 +3,9 @@ import Warning from '../assets/svg/ic_warning.svg'
 
 const ProfileTabs = () => {
     const [openTab, setOpenTab] = useState(1);
-
+    const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')) || null)
+    console.log("User info ", JSON.parse(localStorage.getItem('userInfo')));
+    
     const handleTabClick = (tabNumber) => {
         setOpenTab(tabNumber);
     };
@@ -48,11 +50,11 @@ const ProfileTabs = () => {
                             <form className='flex flex-row flex-wrap '>
                                 <div className='w-2/4 pr-5 flex flex-col mt-4'>
                                     <label className='text-[#222] mb-1 text-[10px] font-medium leading-normal' htmlFor="fullName">Full Name</label>
-                                    <input type="text" name="fullName" id="fullName" placeholder='John Smith' className='h-[36px] px-4 text-[#464646] text-xs font-normal leading-normal rounded border opacity-[0.78] shadow-[0px_2px_7px_0px_rgba(82,82,82,0.06)] border-solid border-[rgba(209,209,209,0.50)]' />
+                                    <input type="text" name="fullName" id="fullName" value={userInfo?.firstName + " " + userInfo?.lastName } placeholder='John Smith' className='h-[36px] px-4 text-[#464646] text-xs font-normal leading-normal rounded border opacity-[0.78] shadow-[0px_2px_7px_0px_rgba(82,82,82,0.06)] border-solid border-[rgba(209,209,209,0.50)]' />
                                 </div>
                                 <div className='w-2/4 pr-5 flex flex-col mt-4'>
                                     <label className='text-[#222] mb-1 text-[10px] font-medium leading-normal' htmlFor="username">Username</label>
-                                    <input type="text" name="username" id="username" placeholder='Smith’s Company' className='h-[36px] text-[#464646] text-xs font-normal leading-normal px-4 rounded border opacity-[0.78] shadow-[0px_2px_7px_0px_rgba(82,82,82,0.06)] border-solid border-[rgba(209,209,209,0.50)]' />
+                                    <input type="text" name="username" id="username" value={userInfo?.username} placeholder='Smith’s Company' className='h-[36px] text-[#464646] text-xs font-normal leading-normal px-4 rounded border opacity-[0.78] shadow-[0px_2px_7px_0px_rgba(82,82,82,0.06)] border-solid border-[rgba(209,209,209,0.50)]' />
                                 </div>
                                 <div className='w-2/4 pr-5 flex flex-col mt-4'>
                                     <label className='text-[#222] mb-1 text-[10px] font-medium leading-normal' htmlFor="timezone">Timezone</label>
@@ -62,7 +64,7 @@ const ProfileTabs = () => {
                                 </div>
                                 <div className='w-2/4 pr-5 flex flex-col mt-4 relative'>
                                     <label className='text-[#222] mb-1 text-[10px] font-medium leading-normal' htmlFor="fullName">Email</label>
-                                    <input type="email" name="email" id="email" placeholder='smith34@gmail.com' className='h-[36px] text-[#464646] text-xs font-normal leading-normal px-4 rounded border opacity-[0.78] shadow-[0px_2px_7px_0px_rgba(82,82,82,0.06)] border-solid border-[rgba(209,209,209,0.50)] relative' />
+                                    <input type="email" name="email" id="email" value={userInfo?.email} placeholder='smith34@gmail.com' className='h-[36px] text-[#464646] text-xs font-normal leading-normal px-4 rounded border opacity-[0.78] shadow-[0px_2px_7px_0px_rgba(82,82,82,0.06)] border-solid border-[rgba(209,209,209,0.50)] relative' />
                                     <p className='absolute top-7 right-7 cursor-pointer text-[#845E9A] text-[10px] font-normal leading-normal'>Change Email</p>
                                 </div>
                             </form>

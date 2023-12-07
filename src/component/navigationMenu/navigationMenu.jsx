@@ -111,7 +111,7 @@ const NavigationMenu = () => {
               </p>
             </Link>
             <Link
-              to="/dashboard"
+              to="/profile"
               role="button"
               tabIndex={0}
               className="group max-w-[154px] h-[34px] mb-[6px] flex items-center justify-start mx-auto gap-2 px-2.5 py-[5px] rounded-md hover:bg-[#F0F0FF] focus:bg-[#F0F0FF] cursor-pointer"

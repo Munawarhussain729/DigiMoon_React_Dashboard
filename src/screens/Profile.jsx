@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import BgImage from '../assets/images/BG.png';
 import NavigationMenu from '../component/navigationMenu/navigationMenu';
@@ -21,6 +21,7 @@ const ProfileComponentStyled = styled.div`
 `;
 
 const Profile = () => {
+    
     return (
         <>
             <ProfileComponentStyled>
