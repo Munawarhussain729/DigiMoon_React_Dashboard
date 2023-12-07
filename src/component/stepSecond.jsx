@@ -1,20 +1,20 @@
 import React from 'react'
 
-const StepSecond = () => {
+const StepSecond = ({setSetupStep})=>{
     return (
         <>
 
             <div class="sec1 w-[1210px] h-[156px] mt-6 rounded-[5px] bg-[#8a89fe] mx-auto flex">
                 <div class="w-[544px] mx-auto flex justify-between pt-[22px] pb-[32px]">
-                    <div class="flex items-center flex-col opacity-50">
-                        <div
+                    <div onClick={()=>{setSetupStep(0)}} class="cursor-pointer flex items-center flex-col opacity-50">
+                        <div 
                             class="w-[63px] h-[63px] rounded-full bg-[#9592fb] text-2xl leading-9 text-white text-center font-medium flex justify-center items-center">
                             1</div>
                         <div class="text-[18px] leading-7 font-medium  text-white pt-3">Step
                             1 (Upload Files)</div>
                     </div>
-                    <div class="flex items-center flex-col">
-                        <div
+                    <div onClick={()=>{setSetupStep(1)}} class="cursor-pointer flex items-center flex-col">
+                        <div 
                             class="w-[63px] h-[63px] rounded-full bg-[#9592fb] text-2xl leading-9 text-white text-center font-medium flex justify-center items-center">
                             2</div>
                         <div class="text-[18px] leading-7 font-medium  text-white pt-3">Step 2 (Mapping)</div>
